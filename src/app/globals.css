@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
+/* ===== Cat Sanctuary pastel theme ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fff9f0; /* warm cream */
+  --foreground: #5b5148; /* soft warm brown for text */
 }
 
 @theme inline {
+  /* base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* pastel Animal Crossing palette */
+  --color-cream: #fff9f0;
+  --color-sand: #fbeede;
+  --color-mint: #a8e6cf;
+  --color-mint-deep: #6fcf9f;
+  --color-coral: #ff9aa2;
+  --color-coral-deep: #ff7686;
+  --color-sky: #a0d8ef;
+  --color-butter: #ffe0a3;
+  --color-lilac: #cdb4f6;
+  --color-ink: #5b5148;
+
+  /* fonts */
+  --font-display: var(--font-fredoka);
+  --font-sans: var(--font-nunito);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-fredoka), system-ui, sans-serif;
 }

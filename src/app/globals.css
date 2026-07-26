@@ -1,39 +1,99 @@
 @import "tailwindcss";
 
-/* ===== Cat Sanctuary pastel theme ===== */
+/* ===== Whisker Chase — warm & friendly theme =====
+   Rule: pastels are backgrounds only (page + section bands).
+   Deep anchors (--ink, --ink-muted, --button, --button-text, --check) are
+   the only colors ever used for text or interactive elements. --stars is a
+   highlight-only exception (review stars), never a button or body text.
+*/
 :root {
-  --background: #fff9f0; /* warm cream */
-  --foreground: #5b5148; /* soft warm brown for text */
+  /* pastel fields — backgrounds / section bands only */
+  --page: #fdf7f5;
+  --blush: #fbe8e4;
+  --lilac: #f0e6f3;
+  --sage: #e4efe7;
+  --butter: #fbefda; /* hero band */
+
+  /* anchors — text + actions only */
+  --ink: #2b2130;       /* all headlines + body */
+  --ink-muted: #6f6274; /* secondary text, captions */
+  --button: #f4826e;    /* soft coral — CTA fill, links, active states */
+  --button-hover: #e86f5a;
+  /*
+    White on --button is only 2.54:1 (fails WCAG AA 4.5:1), so per the
+    spec's own fallback this uses the dark-brown alternative instead,
+    which lands at 5.69:1.
+  */
+  --button-text: #4a1b0c;
+  --stars: #e0a63c; /* review stars + tiny highlights ONLY, never a button */
+
+  /* checkmarks — deep green, never the pastel sage */
+  --check: #4e6b54;
+
+  /* hairline dividers and borders, 0.5px */
+  --line: #ebdcda;
+
+  --background: var(--page);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   /* base */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--page);
+  --color-foreground: var(--ink);
 
-  /* pastel Animal Crossing palette */
-  --color-cream: #fff9f0;
-  --color-sand: #fbeede;
-  --color-mint: #a8e6cf;
-  --color-mint-deep: #6fcf9f;
-  --color-coral: #ff9aa2;
-  --color-coral-deep: #ff7686;
-  --color-sky: #a0d8ef;
-  --color-butter: #ffe0a3;
-  --color-lilac: #cdb4f6;
-  --color-ink: #5b5148;
+  /* new names */
+  --color-page: var(--page);
+  --color-blush: var(--blush);
+  --color-lilac: var(--lilac);
+  --color-sage: var(--sage);
+  --color-butter: var(--butter);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-button: var(--button);
+  --color-button-hover: var(--button-hover);
+  --color-button-text: var(--button-text);
+  --color-stars: var(--stars);
+  --color-check: var(--check);
+  --color-line: var(--line);
+
+  /* legacy aliases so not-yet-updated sections keep working during rollout */
+  --color-bg: var(--page);
+  --color-surface: var(--blush);
+  --color-accent: var(--button);
+  --color-accent-hover: var(--button-hover);
+  --color-lamp: var(--stars);
 
   /* fonts */
-  --font-display: var(--font-fredoka);
-  --font-sans: var(--font-nunito);
+  --font-display: var(--font-baloo);
+  --font-sans: var(--font-figtree);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-nunito), system-ui, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-figtree), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, .font-display {
-  font-family: var(--font-fredoka), system-ui, sans-serif;
+  font-family: var(--font-baloo), system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--button);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

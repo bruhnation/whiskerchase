@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
-import { Fredoka, Nunito } from "next/font/google";
+import { Baloo_2, Figtree } from "next/font/google";
 import "./globals.css";
 
-const fredoka = Fredoka({
-  variable: "--font-fredoka",
+const baloo = Baloo_2({
+  variable: "--font-baloo",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["600", "700"],
+  display: "swap",
 });
 
-const nunito = Nunito({
-  variable: "--font-nunito",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Cat Sanctuary — The Wall-Climbing Lizard Your Cat Will Adore",
+  title: "Whisker Chase: A gecko that climbs walls. A cat that can't resist.",
   description:
-    "Geckoat: a cute, expertly-made wall-climbing lizard toy that keeps your cat happily playing for hours. From Cat Sanctuary.",
+    "A remote-controlled gecko that climbs, darts, and gets pounced on while you drive it from the couch. The cat toy you play too.",
 };
 
 export default function RootLayout({
@@ -27,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fredoka.variable} ${nunito.variable} h-full antialiased`}
+      className={`${baloo.variable} ${figtree.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

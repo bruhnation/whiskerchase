@@ -35,7 +35,7 @@ export default function Home() {
       <header className="sticky top-0 z-20 backdrop-blur-md bg-bg/80 border-b border-line">
         <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
           <Link href="/" className="font-display text-xl font-semibold flex items-center gap-2">
-            <ImagePlaceholder label="Logo" className="h-8 w-8 shrink-0 text-[10px]" />
+            <Logo className="h-8 w-8 shrink-0" />
             Whisker Chase
           </Link>
           <nav className="flex items-center gap-6 text-sm font-medium">
@@ -327,7 +327,7 @@ export default function Home() {
       {/* ===== §9 Guarantee ===== */}
       <section className="bg-sage py-14 sm:py-20">
         <div className="mx-auto max-w-2xl px-6 text-center">
-          <ImagePlaceholder label="Guarantee badge" className="mx-auto h-20 w-20 text-[10px]" />
+          <GuaranteeBadge className="mx-auto h-20 w-20" />
           <h2 className="mt-6 font-display text-[28px] sm:text-[40px] font-semibold leading-[1.15]">
             The 30-day happy-cat guarantee.
           </h2>
@@ -439,6 +439,92 @@ function Highlight({ children }: { children: React.ReactNode }) {
       />
       {children}
     </span>
+  );
+}
+
+/**
+ * Brand mark: a gecko's climbing foot, five toes splayed. The grip is the
+ * whole hook of this product, and unlike a full gecko silhouette this still
+ * reads at the 32px the nav renders it at.
+ *
+ * aria-hidden because the wordmark sits right beside it in the nav.
+ */
+function Logo({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} fill="none" aria-hidden="true">
+      {/* Toes fanned evenly across roughly 150 degrees, each rooted inside the
+          palm so there is no seam, and tipped with the bulbous adhesive pad
+          that is the giveaway for a gecko rather than a paw or a hand. */}
+      <g stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+        <path d="M13.1 18.4 L6.4 16.6" />
+        <path d="M14.2 16.8 L10 11.2" />
+        <path d="M16 16.2 L16 9.2" />
+        <path d="M17.8 16.8 L22 11.2" />
+        <path d="M18.9 18.4 L25.6 16.6" />
+      </g>
+      <g fill="currentColor">
+        <circle cx="6.4" cy="16.6" r="1.9" />
+        <circle cx="10" cy="11.2" r="1.9" />
+        <circle cx="16" cy="9.2" r="1.9" />
+        <circle cx="22" cy="11.2" r="1.9" />
+        <circle cx="25.6" cy="16.6" r="1.9" />
+      </g>
+      <ellipse cx="16" cy="20.5" rx="5" ry="4.3" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
+ * Guarantee seal for section 9. Scalloped rosette in --check (the deep green
+ * already used for checkmarks) so it reads as "verified" without borrowing
+ * coral, which is reserved for CTAs. The heading beside it carries the full
+ * promise, so this is aria-hidden and only has to say "30 days".
+ */
+function GuaranteeBadge({ className = "" }: { className?: string }) {
+  const scallops = Array.from({ length: 16 }, (_, i) => {
+    const a = (i / 16) * Math.PI * 2;
+    return { cx: 40 + Math.cos(a) * 33, cy: 40 + Math.sin(a) * 33 };
+  });
+  return (
+    <svg viewBox="0 0 80 80" className={className} aria-hidden="true">
+      {scallops.map((s, i) => (
+        <circle key={i} cx={s.cx} cy={s.cy} r="4.6" fill="var(--check)" />
+      ))}
+      <circle cx="40" cy="40" r="34" fill="var(--check)" />
+      <circle cx="40" cy="40" r="29" fill="var(--page)" />
+      <circle cx="40" cy="40" r="25.5" fill="none" stroke="var(--check)" strokeWidth="1.4" />
+      {/* paw print */}
+      <g fill="var(--check)">
+        <ellipse cx="40" cy="25.5" rx="4.2" ry="3.3" />
+        <circle cx="35.1" cy="20.6" r="1.7" />
+        <circle cx="38.4" cy="19.1" r="1.8" />
+        <circle cx="41.6" cy="19.1" r="1.8" />
+        <circle cx="44.9" cy="20.6" r="1.7" />
+      </g>
+      <text
+        x="40"
+        y="51"
+        textAnchor="middle"
+        fill="var(--ink)"
+        fontSize="22"
+        fontWeight="700"
+        style={{ fontFamily: "var(--font-baloo), system-ui, sans-serif" }}
+      >
+        30
+      </text>
+      <text
+        x="40"
+        y="61"
+        textAnchor="middle"
+        fill="var(--check)"
+        fontSize="8"
+        fontWeight="700"
+        letterSpacing="1.6"
+        style={{ fontFamily: "var(--font-figtree), system-ui, sans-serif" }}
+      >
+        DAYS
+      </text>
+    </svg>
   );
 }
 

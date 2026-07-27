@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Gallery, {
   GalleryProvider,
@@ -147,27 +148,48 @@ export default function Home() {
       <section className="bg-surface py-14 sm:py-24">
         <div className="mx-auto max-w-5xl px-6 flex flex-col gap-16 sm:gap-24">
           {/* Row 1 — the bonding row, lead with this */}
-          <BenefitRow imageSide="right" title="You're player two">
+          <BenefitRow
+            imageSide="right"
+            title="You're player two"
+            src="/product/lifestyle-player-two.jpg"
+            alt="A person sitting on the floor working the remote while their cat stalks the gecko on the wall"
+            focus="object-top"
+          >
             Most cat toys run on their own while you watch. This one doesn&apos;t move
             unless you move it. That&apos;s the difference between your cat playing, and
             the two of you playing.
           </BenefitRow>
 
           {/* Row 2 — the climb. [VERIFY] on drywall, painted wall, and glass. */}
-          <BenefitRow imageSide="left" title="It goes where cats look">
+          <BenefitRow
+            imageSide="left"
+            title="It goes where cats look"
+            src="/product/lifestyle-climb.jpg"
+            alt="A tabby cat up on its hind legs, reaching for the gecko partway up the wall"
+          >
             Cats hunt upward. The gecko climbs vertical surfaces, so the chase leaves
             the floor.{" "}
             <Fill>Confirm which surfaces it actually grips before launch.</Fill>
           </BenefitRow>
 
           {/* Row 3 — durability. [VERIFY] after a real cat goes at one. */}
-          <BenefitRow imageSide="right" title="Built for the pounce">
+          <BenefitRow
+            imageSide="right"
+            title="Built for the pounce"
+            src="/product/lifestyle-pounce.jpg"
+            alt="A cat pinning the gecko down with both front paws on a rug"
+          >
             It&apos;s going to get tackled, bitten, and body-slammed.{" "}
             <Fill>Add what actually holds up once you have tested one.</Fill>
           </BenefitRow>
 
           {/* Row 4 — practical. [VERIFY] runtime and charge time. */}
-          <BenefitRow imageSide="left" title="Charge it, don't feed it">
+          <BenefitRow
+            imageSide="left"
+            title="Charge it, don't feed it"
+            src="/product/lifestyle-charge.jpg"
+            alt="The gecko resting on a side table next to a coiled USB-C charging cable"
+          >
             USB-C in, <Fill>[X] minutes</Fill> of play out. No drawer full of AAs.
           </BenefitRow>
 
@@ -471,13 +493,33 @@ function Pain({ title }: { title: string }) {
 function BenefitRow({
   title,
   imageSide,
+  src,
+  alt,
+  focus = "object-center",
   children,
 }: {
   title: string;
   imageSide: "left" | "right";
+  src: string;
+  alt: string;
+  /* Which part of the photo the square crop keeps. Portrait shots whose
+     subject sits high (a face near the top edge) need "object-top". */
+  focus?: string;
   children: React.ReactNode;
 }) {
-  const image = <ImagePlaceholder label="Feature photo, evening light" className="aspect-[4/3] w-full" />;
+  /* Sources are 3:4 portrait; a square frame keeps more of that framing than
+     the old 4:3 landscape box did, without making the rows tower on desktop. */
+  const image = (
+    <div className="relative aspect-square w-full overflow-hidden rounded-[16px] shadow-[0_2px_12px_rgba(43,33,48,0.06)]">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 640px) 100vw, 50vw"
+        className={`object-cover ${focus}`}
+      />
+    </div>
+  );
   const copy = (
     <div className="flex flex-col justify-center">
       <h3 className="font-display text-[21px] sm:text-[26px] font-semibold leading-[1.25]">{title}</h3>

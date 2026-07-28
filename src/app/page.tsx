@@ -33,16 +33,21 @@ export default function Home() {
 
       {/* ===== Nav ===== */}
       <header className="sticky top-0 z-20 backdrop-blur-md bg-bg/80 border-b border-line">
-        <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-display text-xl font-semibold flex items-center gap-2">
-            <Logo className="h-8 w-8 shrink-0" />
-            Whisker Chase
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+          <Link
+            href="/"
+            className="flex min-h-11 min-w-0 items-center gap-2 font-display text-lg font-semibold sm:text-xl"
+          >
+            <Logo className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" />
+            <span className="truncate">Whisker Chase</span>
           </Link>
-          <nav className="flex items-center gap-6 text-sm font-medium">
-            <a href="#how" className="hidden sm:inline hover:text-button transition-colors">How it works</a>
-            <a href="#compare" className="hidden sm:inline hover:text-button transition-colors">Compare</a>
-            <a href="#faq" className="hidden sm:inline hover:text-button transition-colors">FAQ</a>
-            <BuyLink className="rounded-full bg-button text-button-text px-5 py-2 shadow-[0_2px_12px_rgba(43,33,48,0.06)] hover:bg-button-hover hover:-translate-y-0.5 transition-all">
+          <nav className="flex shrink-0 items-center gap-6 text-sm font-medium">
+            {/* h-11 keeps these a real touch target on tablets without
+                changing how they look, since the header centres them anyway. */}
+            <a href="#how" className="hidden sm:inline-flex h-11 items-center hover:text-button transition-colors">How it works</a>
+            <a href="#compare" className="hidden sm:inline-flex h-11 items-center hover:text-button transition-colors">Compare</a>
+            <a href="#faq" className="hidden sm:inline-flex h-11 items-center hover:text-button transition-colors">FAQ</a>
+            <BuyLink className="inline-flex h-11 items-center justify-center rounded-full bg-button px-4 text-button-text shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition-all hover:bg-button-hover hover:-translate-y-0.5 sm:px-5">
               Add to cart
             </BuyLink>
           </nav>
@@ -68,9 +73,9 @@ export default function Home() {
             ]}
           />
 
-          {/* Buy box */}
-          <div className="lg:pl-4">
-            <h1 className="font-display text-[34px] sm:text-[56px] font-semibold leading-[1.05] tracking-[-0.02em] text-ink">
+          {/* Buy box. min-w-0 for the same grid-item reason as the gallery. */}
+          <div className="min-w-0 lg:pl-4">
+            <h1 className="font-display text-[30px] min-[380px]:text-[34px] sm:text-[56px] font-semibold leading-[1.05] tracking-[-0.02em] text-ink">
               A <Highlight>gecko</Highlight> that climbs walls. A{" "}
               <Highlight>cat</Highlight> that can&apos;t resist.
             </h1>
@@ -99,7 +104,7 @@ export default function Home() {
               Ships in 6 to 10 business days. Free returns. Real cats, real footage.
             </p>
 
-            <ul className="mt-7 grid grid-cols-2 gap-3 text-sm font-medium">
+            <ul className="mt-7 grid grid-cols-1 min-[380px]:grid-cols-2 gap-3 text-sm font-medium">
               <BuyBoxBullet text="You drive, they hunt" />
               {/* [VERIFY] wall + floor climbing before publishing */}
               <BuyBoxBullet text="Climbs walls and floors" />
@@ -146,7 +151,7 @@ export default function Home() {
 
       {/* ===== §4 Benefit blocks ===== */}
       <section className="bg-surface py-14 sm:py-24">
-        <div className="mx-auto max-w-5xl px-6 flex flex-col gap-16 sm:gap-24">
+        <div className="mx-auto max-w-5xl px-6 flex flex-col gap-16 md:gap-24">
           {/* Row 1 — the bonding row, lead with this */}
           <BenefitRow
             imageSide="right"
@@ -205,7 +210,7 @@ export default function Home() {
           <h2 className="text-center font-display text-[28px] sm:text-[40px] font-semibold leading-[1.15]">
             Three steps to a very busy cat.
           </h2>
-          <div className="mt-14 grid gap-8 sm:grid-cols-3">
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
             <Step n="1" title="Charge it">
               USB-C, <Fill>[X] minutes</Fill> to full.
             </Step>
@@ -237,18 +242,44 @@ export default function Home() {
           <h2 className="text-center font-display text-[28px] sm:text-[40px] font-semibold leading-[1.15]">
             Why cat toys stopped getting better.
           </h2>
-          {/* Scrolls sideways on very narrow phones instead of crushing the columns. */}
-          <div className="mt-12 overflow-x-auto">
-            <div className="min-w-[440px] overflow-hidden rounded-[14px] border border-line bg-bg">
+          {/* Mobile: one card per row, both columns visible. The old sideways
+              scroller pushed the "typical cat toy" column off screen, which is
+              the half of the comparison that does the persuading. */}
+          <div className="mt-12 space-y-3 sm:hidden">
+            {COMPARE_ROWS.map((r) => (
+              <div
+                key={r.label}
+                className="overflow-hidden rounded-[14px] border border-line bg-bg"
+              >
+                <p className="border-b border-line px-4 py-2.5 font-bold">{r.label}</p>
+                <div className="grid grid-cols-2 text-sm">
+                  <div className="bg-accent/5 px-4 py-3 border-r border-line">
+                    <p className="font-display font-semibold">Whisker Chase</p>
+                    <p className="mt-1 text-ink">{r.us}</p>
+                  </div>
+                  <div className="px-4 py-3">
+                    <p className="font-medium text-ink-muted">A typical cat toy</p>
+                    <p className="mt-1 text-ink-muted">{r.them}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* sm and up: the real table, which now always has room for all three columns. */}
+          <div className="mt-12 hidden sm:block">
+            <div className="overflow-hidden rounded-[14px] border border-line bg-bg">
               <div className="grid grid-cols-[1.2fr_1fr_1fr] text-sm sm:text-base">
                 <CompareHead />
-                <CompareRow label="Who's playing" us="Both of you" them="Your cat, alone" />
-                <CompareRow label="Movement" us="You steer it" them="Gravity" />
-                {/* [VERIFY] surfaces */}
-                <CompareRow label="Surfaces" us="Floors and walls" them="Floor" />
-                <CompareRow label="Power" us="USB-C rechargeable" them="Batteries or nothing" />
-                <CompareRow label="Holds interest" us="Different every session" them="Same three moves" />
-                <CompareRow label="If they hate it" us="30-day refund" them="Drawer of shame" last />
+                {COMPARE_ROWS.map((r, i) => (
+                  <CompareRow
+                    key={r.label}
+                    label={r.label}
+                    us={r.us}
+                    them={r.them}
+                    last={i === COMPARE_ROWS.length - 1}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -367,15 +398,21 @@ export default function Home() {
             Cat toys that actually got designed. Occasional emails, no nonsense.
           </p>
           <form className="mt-6 flex flex-col sm:flex-row gap-3">
+            {/* flex-1 only once the form is a row: in the stacked mobile layout
+                flex-1 applies its basis to the height axis and collapses the
+                field to ~22px. */}
             <input
               type="email"
+              name="email"
+              autoComplete="email"
               required
               placeholder="you@example.com"
-              className="flex-1 rounded-[10px] border border-line bg-bg px-4 py-3 outline-none focus:border-accent"
+              aria-label="Email address"
+              className="h-12 w-full min-w-0 rounded-[10px] border border-line bg-bg px-4 outline-none focus:border-accent sm:flex-1"
             />
             <button
               type="submit"
-              className="rounded-full bg-button text-button-text font-bold px-6 py-3 shadow-[0_2px_12px_rgba(43,33,48,0.06)] hover:bg-button-hover hover:-translate-y-0.5 transition-all"
+              className="h-12 shrink-0 rounded-full bg-button text-button-text font-bold px-6 shadow-[0_2px_12px_rgba(43,33,48,0.06)] hover:bg-button-hover hover:-translate-y-0.5 transition-all"
             >
               Keep me posted
             </button>
@@ -385,19 +422,22 @@ export default function Home() {
 
       {/* ===== Footer ===== */}
       <footer className="mt-auto bg-surface border-t border-line">
-        <div className="mx-auto max-w-6xl px-6 py-14 grid gap-8 sm:grid-cols-3 text-sm">
+        <div className="mx-auto max-w-6xl px-6 py-14 grid gap-8 md:grid-cols-3 text-sm">
           <div>
             <p className="font-display text-lg font-semibold">Whisker Chase</p>
             <p className="mt-2 text-ink-muted">The cat toy you play too.</p>
           </div>
           <div>
             <p className="font-bold">Policies</p>
-            <ul className="mt-3 space-y-2 text-ink-muted">
-              <li><a href="#" className="hover:text-accent">Shipping Policy</a></li>
-              <li><a href="#" className="hover:text-accent">Refund Policy</a></li>
-              <li><a href="#" className="hover:text-accent">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-accent">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-accent">Contact</a></li>
+            {/* Links get a full 44px row so they are tappable, not pixel-hunting. */}
+            <ul className="mt-1 text-ink-muted">
+              {["Shipping Policy", "Refund Policy", "Privacy Policy", "Terms of Service", "Contact"].map((label) => (
+                <li key={label}>
+                  <a href="#" className="inline-flex min-h-11 items-center hover:text-accent">
+                    {label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
@@ -424,6 +464,17 @@ export default function Home() {
 }
 
 /* ===== Small reusable pieces ===== */
+
+/* Single source for §6 so the mobile cards and the desktop table can never
+   drift apart. [VERIFY] the "Surfaces" row before publishing. */
+const COMPARE_ROWS = [
+  { label: "Who's playing", us: "Both of you", them: "Your cat, alone" },
+  { label: "Movement", us: "You steer it", them: "Gravity" },
+  { label: "Surfaces", us: "Floors and walls", them: "Floor" },
+  { label: "Power", us: "USB-C rechargeable", them: "Batteries or nothing" },
+  { label: "Holds interest", us: "Different every session", them: "Same three moves" },
+  { label: "If they hate it", us: "30-day refund", them: "Drawer of shame" },
+];
 
 /**
  * Highlighter wash behind a headline word. A shorter bar sits behind the
@@ -601,7 +652,7 @@ function BenefitRow({
         src={src}
         alt={alt}
         fill
-        sizes="(max-width: 640px) 100vw, 50vw"
+        sizes="(max-width: 768px) 100vw, 50vw"
         className={`object-cover ${focus}`}
       />
     </div>
@@ -613,7 +664,9 @@ function BenefitRow({
     </div>
   );
   return (
-    <div className="grid gap-8 sm:grid-cols-2 sm:items-center">
+    /* Stays stacked until md: a square photo plus a paragraph in two columns
+       is too cramped on a large phone or a small tablet at 640px. */
+    <div className="grid gap-8 md:grid-cols-2 md:items-center">
       {imageSide === "left" ? (
         <>
           {image}
@@ -621,8 +674,8 @@ function BenefitRow({
         </>
       ) : (
         <>
-          <div className="sm:order-2">{image}</div>
-          <div className="sm:order-1">{copy}</div>
+          <div className="md:order-2">{image}</div>
+          <div className="md:order-1">{copy}</div>
         </>
       )}
     </div>
@@ -679,9 +732,9 @@ function CompareRow({
 function Faq({ q, children }: { q: string; children: React.ReactNode }) {
   return (
     <details className="group rounded-[14px] bg-surface border border-line p-5">
-      <summary className="flex cursor-pointer items-center justify-between font-semibold list-none">
+      <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-semibold list-none">
         {q}
-        <span className="text-accent text-xl transition-transform group-open:rotate-45">+</span>
+        <span className="shrink-0 text-accent text-xl transition-transform group-open:rotate-45">+</span>
       </summary>
       <p className="mt-3 text-ink-muted">{children}</p>
     </details>

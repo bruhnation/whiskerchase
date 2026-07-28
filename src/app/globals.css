@@ -69,12 +69,24 @@
   --font-sans: var(--font-figtree);
 }
 
+/* Anchor links (#how, #compare, #faq) must clear the sticky 64px header,
+   otherwise the section heading lands underneath it. */
+html {
+  scroll-padding-top: 5rem;
+}
+
 body {
   background: var(--page);
   color: var(--ink);
   font-family: var(--font-figtree), system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.6;
+}
+
+/* iOS Safari keeps drawing its own disclosure triangle on <summary> even
+   with list-style:none, which collides with the FAQ's own +/x control. */
+summary::-webkit-details-marker {
+  display: none;
 }
 
 h1, h2, h3, h4, .font-display {

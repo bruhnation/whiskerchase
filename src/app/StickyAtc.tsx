@@ -24,19 +24,19 @@ export default function StickyAtc() {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-30 border-t border-line bg-bg/95 backdrop-blur-md transition-transform duration-300 ${
+      className={`fixed inset-x-0 bottom-0 z-30 border-t border-line bg-bg/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md transition-transform duration-300 ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
         <div className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-dashed border-line bg-page/70 text-[9px] font-semibold text-ink-muted sm:flex">
           Photo
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate font-display font-semibold leading-tight">Whisker Chase</p>
-          <p className="text-sm text-ink-muted">$34.99 CAD · Free shipping</p>
+          <p className="truncate text-sm text-ink-muted">$34.99 CAD · Free shipping</p>
         </div>
-        <BuyLink className="shrink-0 rounded-full bg-button px-6 py-3 font-bold text-button-text shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition-all hover:bg-button-hover hover:-translate-y-0.5">
+        <BuyLink className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-button px-5 font-bold text-button-text shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition-all hover:bg-button-hover hover:-translate-y-0.5 sm:px-6">
           Add to cart
         </BuyLink>
       </div>

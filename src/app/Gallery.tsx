@@ -1,7 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { buyUrl, DEFAULT_COLOR, type ColorName } from "./shopify";
 
 /* Swatch order + the slide that shows each colour. This array is the single
@@ -66,21 +73,45 @@ type Slide = { src: string; alt: string };
  */
 export default function Gallery({ slides }: { slides: Slide[] }) {
   const { index, setIndex } = useGallery();
-  const [touchX, setTouchX] = useState<number | null>(null);
+  const [touch, setTouch] = useState<{ x: number; y: number } | null>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
 
   const go = (n: number) => setIndex((n + slides.length) % slides.length);
 
+  /* Keep the active thumbnail in view when the slide changes from somewhere
+     else (a swatch tap, an arrow). Scrolls the strip's own scrollLeft rather
+     than using scrollIntoView, which would also yank the page vertically. */
+  useEffect(() => {
+    const strip = stripRef.current;
+    const thumb = strip?.children[index] as HTMLElement | undefined;
+    if (!strip || !thumb) return;
+    strip.scrollTo({
+      left: thumb.offsetLeft - (strip.clientWidth - thumb.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [index]);
+
   return (
-    <div>
+    /* min-w-0 is load-bearing: this sits in the hero grid, and grid items
+       default to min-width:auto, so without it the thumbnail strip's
+       min-content width becomes the floor for the whole page and every
+       section scrolls sideways on a phone. */
+    <div className="min-w-0">
       <div
         className="relative overflow-hidden rounded-[16px] shadow-[0_2px_12px_rgba(43,33,48,0.06)]"
-        onTouchStart={(e) => setTouchX(e.touches[0].clientX)}
+        onTouchStart={(e) =>
+          setTouch({ x: e.touches[0].clientX, y: e.touches[0].clientY })
+        }
         onTouchEnd={(e) => {
-          if (touchX === null) return;
-          const dx = e.changedTouches[0].clientX - touchX;
-          if (dx > 40) go(index - 1);
-          else if (dx < -40) go(index + 1);
-          setTouchX(null);
+          if (touch === null) return;
+          const dx = e.changedTouches[0].clientX - touch.x;
+          const dy = e.changedTouches[0].clientY - touch.y;
+          /* Only act on a gesture that is clearly horizontal, otherwise
+             scrolling the page with a slightly diagonal thumb flips the photo. */
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+            go(dx > 0 ? index - 1 : index + 1);
+          }
+          setTouch(null);
         }}
       >
         <div
@@ -115,7 +146,7 @@ export default function Gallery({ slides }: { slides: Slide[] }) {
           type="button"
           onClick={() => go(index - 1)}
           aria-label="Previous image"
-          className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-page/90 text-xl text-ink shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition hover:bg-page"
+          className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-page/90 text-xl text-ink shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition hover:bg-page sm:left-3"
         >
           <span aria-hidden="true">&#8249;</span>
         </button>
@@ -123,7 +154,7 @@ export default function Gallery({ slides }: { slides: Slide[] }) {
           type="button"
           onClick={() => go(index + 1)}
           aria-label="Next image"
-          className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-page/90 text-xl text-ink shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition hover:bg-page"
+          className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-page/90 text-xl text-ink shadow-[0_2px_12px_rgba(43,33,48,0.06)] transition hover:bg-page sm:right-3"
         >
           <span aria-hidden="true">&#8250;</span>
         </button>
@@ -133,8 +164,12 @@ export default function Gallery({ slides }: { slides: Slide[] }) {
         </div>
       </div>
 
-      {/* Thumbnail strip — scrolls sideways on narrow screens. */}
-      <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+      {/* Thumbnail strip — scrolls sideways on narrow screens. Snap points make
+          the sideways scroll feel deliberate rather than loose on touch. */}
+      <div
+        ref={stripRef}
+        className="mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1"
+      >
         {slides.map((s, idx) => (
           <button
             key={s.src}
@@ -142,7 +177,7 @@ export default function Gallery({ slides }: { slides: Slide[] }) {
             onClick={() => setIndex(idx)}
             aria-label={`View image ${idx + 1}`}
             aria-current={idx === index}
-            className={`relative aspect-square w-16 shrink-0 overflow-hidden rounded-[10px] bg-page ring-2 transition ${
+            className={`relative aspect-square w-16 shrink-0 snap-start overflow-hidden rounded-[10px] bg-page ring-2 transition ${
               idx === index ? "ring-ink" : "ring-transparent hover:ring-line"
             }`}
           >
@@ -223,7 +258,7 @@ export function ColorSwatches() {
             aria-label={c.name}
             aria-pressed={c.color === color}
             style={{ backgroundColor: c.hex }}
-            className={`flex h-9 w-9 items-center justify-center rounded-full ring-offset-2 ring-offset-butter transition ${
+            className={`flex h-11 w-11 items-center justify-center rounded-full ring-offset-2 ring-offset-butter transition ${
               c.color === color ? "ring-[3px] ring-ink" : "ring-2 ring-transparent hover:ring-line"
             }`}
           >

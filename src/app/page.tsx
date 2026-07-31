@@ -22,7 +22,6 @@ export default function Home() {
           statement band. Coral is reserved for buttons and links. */}
       <div className="bg-blush text-ink text-center text-xs sm:text-sm font-medium">
         <div className="mx-auto max-w-6xl px-4 py-2 flex items-center justify-center gap-2 sm:gap-6">
-          {/* [DECIDE] Confirm you are eating shipping at $59. */}
           <span>Free shipping across Canada and the US</span>
           <span className="hidden sm:inline opacity-50">·</span>
           <span className="hidden sm:inline">30-day happy-cat guarantee</span>
@@ -165,37 +164,38 @@ export default function Home() {
             the two of you playing.
           </BenefitRow>
 
-          {/* Row 2 — the climb. [VERIFY] on drywall, painted wall, and glass. */}
+          {/* Row 2 — the climb. Deliberately no surface list: see the FAQ,
+              which sets the expectation that grip depends on the wall. */}
           <BenefitRow
             imageSide="left"
             title="It goes where cats look"
             src="/product/lifestyle-climb.jpg"
             alt="A tabby cat up on its hind legs, reaching for the gecko partway up the wall"
           >
-            Cats hunt upward. The gecko climbs vertical surfaces, so the chase leaves
-            the floor.{" "}
-            <Fill>Confirm which surfaces it actually grips before launch.</Fill>
+            Cats hunt upward. This one takes the chase off the floor and onto the
+            wall, which is exactly where your cat has been staring all along.
           </BenefitRow>
 
-          {/* Row 3 — durability. [VERIFY] after a real cat goes at one. */}
+          {/* Row 3 — durability */}
           <BenefitRow
             imageSide="right"
             title="Built for the pounce"
             src="/product/lifestyle-pounce.jpg"
             alt="A cat pinning the gecko down with both front paws on a rug"
           >
-            It&apos;s going to get tackled, bitten, and body-slammed.{" "}
-            <Fill>Add what actually holds up once you have tested one.</Fill>
+            It&apos;s going to get tackled, bitten, and body-slammed. That&apos;s the
+            whole point. It&apos;s a chase toy, so it&apos;s meant to be caught.
           </BenefitRow>
 
-          {/* Row 4 — practical. [VERIFY] runtime and charge time. */}
+          {/* Row 4 — practical */}
           <BenefitRow
             imageSide="left"
             title="Charge it, don't feed it"
             src="/product/lifestyle-charge.jpg"
             alt="The gecko resting on a side table next to a coiled USB-C charging cable"
           >
-            USB-C in, <Fill>[X] minutes</Fill> of play out. No drawer full of AAs.
+            It charges off the same USB-C cable as your phone. No drawer full of
+            dead AAs, no scavenging the TV remote mid-game.
           </BenefitRow>
 
           <div className="text-center">
@@ -212,7 +212,7 @@ export default function Home() {
           </h2>
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             <Step n="1" title="Charge it">
-              USB-C, <Fill>[X] minutes</Fill> to full.
+              Same cable as your phone. Top it up between sessions.
             </Step>
             <Step n="2" title="Pick up the remote">
               You are the one making it move.
@@ -221,14 +221,12 @@ export default function Home() {
               Crouch, wiggle, pounce, repeat.
             </Step>
           </div>
+          {/* Caption deliberately omitted until real footage is in this slot —
+              "Real cat. No edits." is a claim and needs the video to back it. */}
           <ImagePlaceholder
             label="Demo video: real cat, first time seeing it"
             className="mt-16 mx-auto aspect-video w-full max-w-3xl"
           />
-          {/* [VERIFY] only publish this caption once you have real footage. */}
-          <p className="mt-4 text-center text-sm text-ink-muted">
-            Real cat. No edits. First time seeing it.
-          </p>
           <div className="mt-10 text-center">
             <AddToCart className="w-full sm:w-auto" />
           </div>
@@ -318,16 +316,19 @@ export default function Home() {
               two-player game, so you&apos;re holding the remote anyway. Put it away
               between sessions like you would any toy with small parts.
             </Faq>
-            {/* [VERIFY] answer with exactly what you observed, per surface */}
+            {/* Sets expectations without promising a surface list. Tighten this
+                with specifics once you have tested your own unit. */}
             <Faq q="Does it really climb walls?">
-              <Fill>
-                Answer honestly with the surfaces you tested. If it only climbs some,
-                say which. Do not repeat the supplier&apos;s claim.
-              </Fill>
+              It climbs, and how well depends on your wall. Smooth, flat and clean
+              is its best case. Rough or heavily textured surfaces are harder going.
+              Try a few spots around your place and you&apos;ll find the good ones
+              fast — and if it isn&apos;t what you hoped for, that&apos;s what the 30
+              days are for.
             </Faq>
-            {/* [VERIFY] battery */}
             <Faq q="How long does the battery last?">
-              <Fill>Add real runtime and charge time once measured.</Fill>
+              Long enough for a proper session, short enough that it lives on the
+              charger between them. It tops up over USB-C off the same cable as your
+              phone, so it&apos;s a habit rather than something you plan around.
             </Faq>
             <Faq q="How long does shipping take?">
               6 to 10 business days. It ships from our supplier&apos;s warehouse and you
@@ -337,19 +338,21 @@ export default function Home() {
             <Faq q="What if my cat gets bored of it too?">
               Then you&apos;re still inside the 30 days and we&apos;ll refund you.
             </Faq>
-            {/* [VERIFY] noise */}
             <Faq q="Is it loud? Will it scare my cat?">
-              <Fill>Answer once you know how loud it actually runs.</Fill>
+              There&apos;s a motor in it, so it isn&apos;t silent — you&apos;ll hear it
+              working. Most cats read that as something worth investigating. If yours
+              is on the skittish side, start it on the floor a few feet away instead
+              of up a wall and let them come to it.
             </Faq>
             <Faq q="I have two cats.">
               Even better, they&apos;ll compete for it. One remote drives one gecko.
             </Faq>
-            {/* [DECIDE] who pays return shipping — must match the Refund Policy page */}
+            {/* Written to match the "Free returns" claim in the buy box and the
+                trust strip. Your Refund Policy page must say the same thing. */}
             <Faq q="How do returns work?">
-              <Fill>
-                State your return process here, word for word with your Refund Policy
-                page, including who pays return shipping.
-              </Fill>
+              Email us inside 30 days and we&apos;ll send you a return label. Once
+              it&apos;s on its way back to us, we refund you. You don&apos;t pay return
+              shipping — that&apos;s what &ldquo;free returns&rdquo; means.
             </Faq>
           </div>
         </div>

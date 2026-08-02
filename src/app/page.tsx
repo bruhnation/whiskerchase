@@ -428,9 +428,15 @@ export default function Home() {
             <p className="font-bold">Policies</p>
             {/* Links get a full 44px row so they are tappable, not pixel-hunting. */}
             <ul className="mt-1 text-ink-muted">
-              {["Shipping Policy", "Refund Policy", "Privacy Policy", "Terms of Service", "Contact"].map((label) => (
+              {[
+                { label: "Shipping Policy", href: "/shipping-policy" },
+                { label: "Refund Policy", href: "/refund-policy" },
+                { label: "Privacy Policy", href: "/privacy-policy" },
+                { label: "Terms of Service", href: "/terms-of-service" },
+                { label: "Contact", href: "mailto:whiskerchasesupport@gmail.com" },
+              ].map(({ label, href }) => (
                 <li key={label}>
-                  <a href="#" className="inline-flex min-h-11 items-center hover:text-accent">
+                  <a href={href} className="inline-flex min-h-11 items-center hover:text-accent">
                     {label}
                   </a>
                 </li>

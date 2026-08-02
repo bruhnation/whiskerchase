@@ -445,11 +445,9 @@ export default function Home() {
           </div>
           <div>
             <p className="font-bold">Contact</p>
-            {/* [DECIDE] real business name, email, and address are required by law */}
             <ul className="mt-3 space-y-2 text-ink-muted">
-              <li><Fill>your real support email</Fill></li>
-              <li><Fill>registered business name</Fill></li>
-              <li><Fill>business address</Fill></li>
+              <li>whiskerchasesupport@gmail.com</li>
+              <li>Whisker Chase</li>
             </ul>
           </div>
         </div>

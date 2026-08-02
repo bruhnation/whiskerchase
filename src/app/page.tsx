@@ -221,12 +221,6 @@ export default function Home() {
               Crouch, wiggle, pounce, repeat.
             </Step>
           </div>
-          {/* Caption deliberately omitted until real footage is in this slot —
-              "Real cat. No edits." is a claim and needs the video to back it. */}
-          <ImagePlaceholder
-            label="Demo video: real cat, first time seeing it"
-            className="mt-16 mx-auto aspect-video w-full max-w-3xl"
-          />
           <div className="mt-10 text-center">
             <AddToCart className="w-full sm:w-auto" />
           </div>
